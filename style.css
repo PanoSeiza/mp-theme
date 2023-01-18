@@ -5728,29 +5728,16 @@ li {
 /* change the text color by editing "color"  */
 .ns-box {
 	position: relative;
-	background: #C41E3A;
 	padding: 20px;
 	line-height: 1.4;
-	z-index: 1000;
 	pointer-events: none;
 	color: rgba(250,251,255,0.95);
 	font-size: 85%;
 	font-family: 'Commissioner';
   border-bottom: 0px solid #DDD;
-  display: flex;
+	display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.ns-box-info {
-	position: relative;
-	background: #92D293;
-	padding: 10px 20px 20px 20px;
-	line-height: 1.4;
-	z-index: 1000;
-	pointer-events: none;
-	color: rgba(250,251,255,0.95);
-	font-size: 85%;
-  border-bottom: 0px solid #DDD;
 }
 
 .ns-box-inner {
@@ -5758,28 +5745,38 @@ li {
   align-items: center;
 }
 
-.ns-box.ns-show, .ns-box-info.ns-show {
-	pointer-events: auto;
+.regular {
+  background: #DD2F13;
 }
 
-.ns-box a, .ns-box-info a {
+.info {
+	background: #62CF64;
+}
+
+.maintenance {
+  background: #D842DB;
+}
+
+.delays {
+  background: #B3ABA9;
+}
+
+.ns-box a, .ns-box a {
 	color: inherit;
   opacity: 0.7;
 	font-weight: 700;
   max-width: 65%;
 }
 
-.ns-box a:hover,
-.ns-box a:focus, .ns-box-info a:hover, .ns-box-info a:focus{
+.ns-box a:hover, .ns-box a:focus{
 	opacity: 1;
 }
 
-.ns-box p, .ns-box-info p {
+.ns-box p {
     margin: 0;
 }
 
-.ns-box.ns-show,
-.ns-box.ns-visible, .ns-box-info.ns-show, .ns-box-info.ns-visible {
+.ns-box.ns-show, .ns-box.ns-visible {
 	pointer-events: auto;
 }
 
@@ -5787,7 +5784,7 @@ li {
 	width: 20px;
 	height: 20px;
 	position: absolute;
-	right: 4px;
+	right: 50%;
 	top: 50%;
 	overflow: hidden;
 	text-indent: 100%;
@@ -5834,15 +5831,32 @@ li {
 
 body > div.alertbox > div > div > p > a {
   margin-bottom: auto;
+  position: absolute;
+  margin-top: -20px;
 }
 
-.megaphone:before {
+.box-icon:before {
   display: inline-block;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   font: var(--fa-font-solid);
-  content: "\f7ba";
   font-size: 2.2em;
+}
+
+.icon-info:before {
+  content: "\f0f3";
+}
+
+.icon-regular:before {
+  content: "\f7d9";
+}
+
+.icon-delays:before {
+  content: "\f017";
+}
+
+.icon-maintenance:before {
+  content: "\f06a";
 }
 
 /* Top bar notifications */
