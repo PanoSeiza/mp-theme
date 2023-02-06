@@ -5973,3 +5973,7 @@ body > header > div.nav-wrapper-mobile > a {
 #zd-abm-feedback-yes {
   display:none;
 }
+
+#answer-bot-embed {
+  display:none;
+}
