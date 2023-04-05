@@ -47,15 +47,18 @@
   
     // Fill in Field ID from your textarea 
     var browserfield_id = "7433937113490";
-    document.querySelector('.request_custom_fields_' + browserfield_id).hidden = true;  //User Agent
-    document.querySelector('.request_custom_fields_' + '7264112746642').hidden = true;  //OS Version
-    document.querySelector('.request_custom_fields_' + '360015103320').hidden = true;   //Country
-    document.querySelector('.request_custom_fields_' + '7484739424914').hidden = true;  //App Version
-    document.querySelector('.request_custom_fields_' + '7264111625490').hidden = true;  //Device & RAM
-    document.querySelector('.request_custom_fields_' + '8814891499794').hidden = true;  //Profile ID
-    document.querySelector('.request_custom_fields_' + '8837757970194').hidden = true;  //App Source for Georgian MP 
-    document.querySelector('.request_custom_fields_' + '360015024660').hidden = true;  //Hide Game
-
+    try{
+        document.querySelector('.request_custom_fields_' + browserfield_id).hidden = true;  //User Agent
+        document.querySelector('.request_custom_fields_' + '7264112746642').hidden = true;  //OS Version
+        document.querySelector('.request_custom_fields_' + '360015103320').hidden = true;   //Country
+        document.querySelector('.request_custom_fields_' + '7484739424914').hidden = true;  //App Version
+        document.querySelector('.request_custom_fields_' + '7264111625490').hidden = true;  //Device & RAM
+        document.querySelector('.request_custom_fields_' + '8814891499794').hidden = true;  //Profile ID
+        document.querySelector('.request_custom_fields_' + '8837757970194').hidden = true;  //App Source for Georgian MP 
+        document.querySelector('.request_custom_fields_' + '360015024660').hidden = true;  //Hide Game
+    }catch(e){
+        console.log('Cought an Error while hiding fields: ' + e);
+    }
     /**
      * JavaScript Client Detection
      * (C) viazenetti GmbH (Christian Ludwig)
