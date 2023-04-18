@@ -127,6 +127,7 @@
 
                 setContainerIsVisible(false)
 
+                if (!category && document.getElementById(REQUEST_TYPE_FIELD_ID)) category = document.getElementById(REQUEST_TYPE_FIELD_ID).value
                 if (category) appendSuggestedArticles(articlesData, category, subCategory)
             }
         })
