@@ -44,13 +44,13 @@
     let result = null
 
   	if (response.status === 200) {
-			const jsonData = await response.text()
-  		console.log(jsonData)
+        const jsonData = await response.text()
+
   		try {
-				result = JSON.parse(jsonData)
-      } catch (error) {
-				console.log(error)
-      }
+            result = JSON.parse(jsonData)
+        } catch (error) {
+            console.log(error)
+        }
     }
   
   	return result
