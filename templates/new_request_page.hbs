@@ -105,32 +105,34 @@
         let category = null
         let subCategory = null
         const articlesData = await makeGASRequet()
+        
+        if (articlesData) {
+            document.getElementById("new_request").addEventListener("change", (event) => {
+                const elem = event.target
 
-        document.getElementById("new_request").addEventListener("change", (event) => {
-            const elem = event.target
+                if (elem.id === REQUEST_TYPE_FIELD_ID) {
+                    category = elem.value
+                    subCategory = null
 
-            if (elem.id === REQUEST_TYPE_FIELD_ID) {
-                category = elem.value
-                subCategory = null
+                    SUB_TYPE_FIELD_IDS.forEach((id) => {
+                        const inputElem = document.getElementById(id)
 
-                SUB_TYPE_FIELD_IDS.forEach((id) => {
-                    const inputElem = document.getElementById(id)
+                        if (inputElem && !inputElem.disabled && inputElem.value) subCategory = inputElem.value
+                    }) 
 
-                    if (inputElem && !inputElem.disabled && inputElem.value) subCategory = inputElem.value
-                }) 
+                    setContainerIsVisible(false)
 
-                setContainerIsVisible(false)
+                    if (category) appendSuggestedArticles(articlesData, category, subCategory)
+                } else if (SUB_TYPE_FIELD_IDS.includes(elem.id)) {
+                    subCategory = elem.value
 
-                if (category) appendSuggestedArticles(articlesData, category, subCategory)
-            } else if (SUB_TYPE_FIELD_IDS.includes(elem.id)) {
-                subCategory = elem.value
+                    setContainerIsVisible(false)
 
-                setContainerIsVisible(false)
-
-                if (!category && document.getElementById(REQUEST_TYPE_FIELD_ID)) category = document.getElementById(REQUEST_TYPE_FIELD_ID).value
-                if (category) appendSuggestedArticles(articlesData, category, subCategory)
-            }
-        })
+                    if (!category && document.getElementById(REQUEST_TYPE_FIELD_ID)) category = document.getElementById(REQUEST_TYPE_FIELD_ID).value
+                    if (category) appendSuggestedArticles(articlesData, category, subCategory)
+                }
+            })
+        }
     }
 
     // starter
