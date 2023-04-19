@@ -25,10 +25,123 @@
 </div>
 
 
+<script type="text/javascript">
+    // implements article suggestion based on request type and subtype
+
+    // constants
+
+    const REQUEST_TYPE_FIELD_ID = "request_custom_fields_7262280655762"
+    const SUB_TYPE_FIELD_IDS = ["request_custom_fields_7262368681490", "request_custom_fields_7262497953042", "request_custom_fields_7262556008338", "request_custom_fields_7262559730578", "request_custom_fields_7262622636946", "request_custom_fields_7262570577298"]
+    const REQUEST_TYPES_WITHOUT_SUB_TYPE = ["suggestions", "request_other"]
+    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPbQdZ_HGkKz5mMU4iu8LRK3QaJF5_e09V-EExzcSzBnhrholKTmLzyZlA9sgTJiyI/exec"
+    const SUGGESTED_ARTICLES_CONTAINER_ID = "suggested_articles_container"
+    const DESCRIPTION_FIELD_ID = "request_description_mimetype"
+
+    // functions
+
+    const makeGASRequet = async () => {
+        const response = await fetch(GOOGLE_APPS_SCRIPT_URL)
+        let result = null
+
+        if (response.status === 200) {
+            const jsonData = await response.text()
+
+            try {
+                result = JSON.parse(jsonData)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+        return result
+    }
+
+    const createSuggestedArticlesContent = (articles) => {
+        const articleLinksHTML = articles.map((article) => `<div><a target="_blank" href="${article.link}">${article.name}</a></div>`).join("")
+
+        return `<label style="display: block;font-size: 13px;margin-bottom: 5px;">Suggested articles</label><div>${articleLinksHTML}</div>`
+    }
+
+    const setContainerIsVisible = (isVisible) => {
+        const container = document.getElementById(SUGGESTED_ARTICLES_CONTAINER_ID)
+        
+        if (container) container.hidden = !isVisible
+    }
+
+    const appendSuggestedArticles = async (articlesData, category, subCategory) => {
+        const { articles, categories } = articlesData
+        const articlesList = []
+
+        if (categories[category]) {
+            let articleIds = []
+
+            if (subCategory && categories[category][subCategory]) {
+                articleIds = categories[category][subCategory]
+            } else if (categories[category]["___default"]) {
+                articleIds = categories[category]["___default"]
+            }
+
+            articlesList.push(...articleIds.map((articleId) => articles[articleId] || null).filter(Boolean))
+        }
+
+        if (articlesList && articlesList.length) {
+            const content = createSuggestedArticlesContent(articlesList)
+            let container = document.getElementById(SUGGESTED_ARTICLES_CONTAINER_ID)
+
+            if (!container) {
+                container = document.createElement("div")
+                container.id = SUGGESTED_ARTICLES_CONTAINER_ID
+                container.style = "margin-top: 25px"
+
+                document.getElementById(DESCRIPTION_FIELD_ID).parentNode.before(container)
+            }
+
+            container.innerHTML = content
+            setContainerIsVisible(true)
+        } 
+    }
+
+    const main = async () => {
+        let category = null
+        let subCategory = null
+        const articlesData = await makeGASRequet()
+
+        document.getElementById("new_request").addEventListener("change", (event) => {
+            const elem = event.target
+
+            if (elem.id === REQUEST_TYPE_FIELD_ID) {
+                category = elem.value
+                subCategory = null
+
+                SUB_TYPE_FIELD_IDS.forEach((id) => {
+                    const inputElem = document.getElementById(id)
+
+                    if (inputElem && !inputElem.disabled && inputElem.value) subCategory = inputElem.value
+                }) 
+
+                setContainerIsVisible(false)
+
+                if (category) appendSuggestedArticles(articlesData, category, subCategory)
+            } else if (SUB_TYPE_FIELD_IDS.includes(elem.id)) {
+                subCategory = elem.value
+
+                setContainerIsVisible(false)
+
+                if (!category && document.getElementById(REQUEST_TYPE_FIELD_ID)) category = document.getElementById(REQUEST_TYPE_FIELD_ID).value
+                if (category) appendSuggestedArticles(articlesData, category, subCategory)
+            }
+        })
+    }
+
+    // starter
+
+    main()
+
+</script>
 
 <script type="text/javascript">
 
-  	 // Force FullScreen for touch devices for somewhat better experience 
+       // Force FullScreen for touch devices for somewhat better experience 
     
     document.addEventListener("touchend", setFullScreenTrue);
 
@@ -181,13 +294,13 @@
                     locationIP = locationData.ip;
                     console.log("Result: " + locationData.ip);
                 });
-  					fetch('https://api.ipify.org?format=json')
-  							.then(res2 => res2.json())
-  							.then(data2 => {
-  								console.log(data2); //Outputs the JSON
-  								tempIPData = data2;
-  								failsafeIP = tempIPData.ip;
-  								});
+                      fetch('https://api.ipify.org?format=json')
+                              .then(res2 => res2.json())
+                              .then(data2 => {
+                                  console.log(data2); //Outputs the JSON
+                                  tempIPData = data2;
+                                  failsafeIP = tempIPData.ip;
+                                  });
             //setTimeout(foo, 500);
             /*function foo () {
                 locationCountry = locationData.country_code;
@@ -317,3 +430,4 @@
         //document.querySelector('.request_custom_fields_' + browserfield_id).hidden = true;
     }
 </script>
+
