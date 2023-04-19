@@ -57,7 +57,7 @@
     }
 
     const createSuggestedArticlesContent = (articles) => {
-        const articleLinksHTML = articles.map((article) => `<div><a target="_blank" href="${article.link}">${article.name}</a></div>`).join("")
+        const articleLinksHTML = articles.map((article) => `<div><a target="_blank" href="${article.link}"style="font-family: 'Commissioner'">${article.name}</a></div>`).join("")
 
         return `<label style="display: block;font-size: 13px;margin-bottom: 5px;">Suggested articles</label><div>${articleLinksHTML}</div>`
     }
