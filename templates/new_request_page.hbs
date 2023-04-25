@@ -36,6 +36,7 @@
     const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzommdDB2oIw3xN4kAYC8OwQ9P5hp1MHomly7J7hdlyEzRRn53RvqbR1lX6Laedqi5V/exec"
     const SUGGESTED_ARTICLES_CONTAINER_ID = "suggested_articles_container"
     const DESCRIPTION_FIELD_ID = "request_description_mimetype"
+    const DEFAULT_LOCALE = "en-us"
 
     // functions
 
@@ -58,7 +59,7 @@
 
     const createSuggestedArticlesContent = (articles, locale) => {
         const articleLinksHTML = articles.map((article) => { 
-            const title = locale && article.translatedTitles[locale] || article.name
+            const title = article.translatedTitles && (locale && article.translatedTitles[locale] || article.translatedTitles[DEFAULT_LOCALE]) || article.name
 
             return `<div><a target="_blank" href="${article.link}" ">${title}</a></div>`
         }).join("")
