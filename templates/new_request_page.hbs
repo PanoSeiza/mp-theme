@@ -33,7 +33,7 @@
     const REQUEST_TYPE_FIELD_ID = "request_custom_fields_7262280655762"
     const SUB_TYPE_FIELD_IDS = ["request_custom_fields_7262368681490", "request_custom_fields_7262497953042", "request_custom_fields_7262556008338", "request_custom_fields_7262559730578", "request_custom_fields_7262622636946", "request_custom_fields_7262570577298"]
     const REQUEST_TYPES_WITHOUT_SUB_TYPE = ["suggestions", "request_other"]
-    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPbQdZ_HGkKz5mMU4iu8LRK3QaJF5_e09V-EExzcSzBnhrholKTmLzyZlA9sgTJiyI/exec"
+    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzommdDB2oIw3xN4kAYC8OwQ9P5hp1MHomly7J7hdlyEzRRn53RvqbR1lX6Laedqi5V/exec"
     const SUGGESTED_ARTICLES_CONTAINER_ID = "suggested_articles_container"
     const DESCRIPTION_FIELD_ID = "request_description_mimetype"
 
@@ -56,10 +56,14 @@
         return result
     }
 
-    const createSuggestedArticlesContent = (articles) => {
-        const articleLinksHTML = articles.map((article) => `<div><a target="_blank" href="${article.link}"style="font-family: 'Commissioner'">${article.name}</a></div>`).join("")
+    const createSuggestedArticlesContent = (articles, locale) => {
+        const articleLinksHTML = articles.map((article) => { 
+            const title = locale && article.translatedTitles[locale] || article.name
 
-        return `<label style="display: block;font-size: 13px;margin-bottom: 5px;">Suggested articles</label><div>${articleLinksHTML}</div>`
+            return `<div><a target="_blank" href="${article.link}" ">${title}</a></div>`
+        }).join("")
+
+        return `<label style="display: block;font-size: 13px;margin-bottom: 5px;">Suggested articles</label><div style="font-family: "Commissioner">${articleLinksHTML}</div>`
     }
 
     const setContainerIsVisible = (isVisible) => {
@@ -71,6 +75,8 @@
     const appendSuggestedArticles = async (articlesData, category, subCategory) => {
         const { articles, categories } = articlesData
         const articlesList = []
+        const pathnameMatching = location.pathname.match(/hc\/([\w-]+)\//)
+        const currentLocale = pathnameMatching && pathnameMatching[1]
 
         if (categories[category]) {
             let articleIds = []
@@ -85,7 +91,7 @@
         }
 
         if (articlesList && articlesList.length) {
-            const content = createSuggestedArticlesContent(articlesList)
+            const content = createSuggestedArticlesContent(articlesList, currentLocale)
             let container = document.getElementById(SUGGESTED_ARTICLES_CONTAINER_ID)
 
             if (!container) {
