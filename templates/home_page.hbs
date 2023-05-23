@@ -112,7 +112,7 @@
   <div class="pano-frequent-questions-top"></div>
   {{#if promoted_articles}}
   <section class="articles pano-frequent-questions-content">
-    <h2 class="pano-frequent-questions-title">Frequent Questions</h2>
+    <h2 class="pano-frequent-questions-title">{{dc 'hc_pano_faq_string'}}</h2>
     <ul class="article-list promoted-articles">
       {{#each promoted_articles}}
       <li class="promoted-articles-item pano-romoted-articles-item">
@@ -135,6 +135,6 @@
   <div class="pano-frequent-questions-bot"></div>
 </section>
 <section class="pano-bottom">
-  <span class="pano-bottom-text">Still need help? Submit a request and we'll get back to you ASAP!</span>
+  <span class="pano-bottom-text">{{dc 'hc_pano_need_help_string'}}</span>
   {{link 'new_request' class='submit-a-request pano-submit-button pano-bottom-button'}}
 </section>
