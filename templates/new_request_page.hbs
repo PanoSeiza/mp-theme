@@ -154,8 +154,16 @@
     
     document.addEventListener("touchend", setFullScreenTrue);
 
+
+    // Check if the user is on an iOS device
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // If the user is not on an iOS device, execute the fullscreen code
+
     function setFullScreenTrue() {
-        openFullscreen();
+        if (!isIOS) {
+          openFullscreen();
+        }
     }
 
     function openFullscreen() {
