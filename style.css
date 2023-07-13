@@ -5974,9 +5974,10 @@ body > header > div.nav-wrapper-mobile > a {
   display:none;
 }
 
-#answer-bot-embed {
-  display:none;
+iframe#automaticAnswers {
+    display: none;
 }
+
 
 /*Fancy Tables and stuff*/
 #f-tables {
