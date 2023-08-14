@@ -6004,3 +6004,26 @@ iframe#automaticAnswers {
   background-color: #be4747;
   color: white;
 }
+
+/*Fancy Button CSS*/
+
+.f-btn{
+
+font-family: Roboto, sans-serif;
+font-weight: 600;
+font-size: 14px;
+color: #ffffff;
+background-color: #14bc40;
+padding: 10px 30px;
+border: none;
+box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+border-radius: 30px;
+transition : 1000ms;
+transform: translateY(0);
+display: flex;
+flex-direction:row-reverse;
+align-items: center;
+cursor: pointer;
+text-transform: uppercase;
+}
+
