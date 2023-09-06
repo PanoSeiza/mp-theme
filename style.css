@@ -5191,7 +5191,7 @@ html[dir="rtl"] .notification-left-aligned {
   background-position: center; 
   background-repeat: no-repeat; 
   background-size: cover;
-  width: 100vw;
+  width: 100%;
   height: 353px;
   position: absolute;
   top: -244px;
@@ -5201,7 +5201,7 @@ html[dir="rtl"] .notification-left-aligned {
   background-position: center; 
   background-repeat: no-repeat; 
   background-size: cover;
-  width: 100vw;
+  width: 100%;
   height: 80px;
   position: absolute;
   bottom: 0px;
